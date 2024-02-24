@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class AbstractServiceService<T> implements _Service<T>{
+export class AbstractService<T> implements _Service<T>{
 
   constructor(private _http: HttpClient) { }
 
