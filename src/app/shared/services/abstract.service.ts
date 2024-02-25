@@ -10,28 +10,33 @@ import {environment} from "../../../environments/environment.development";
 export class AbstractService<T> implements _Service<T>{
   private api_url = environment.API_URL;
   private _http: HttpClient = inject(HttpClient);
+  private readonly resource: string;
 
-  create(resource: string, item: T): Observable<T> {
-    return this._http.post<T>(`${this.api_url}/${resource}/create`, item);
+  constructor(resource: string) {
+    this.resource = resource;
   }
 
-  delete(resource: string, id: string): Observable<void> {
-    return this._http.delete<void>(`${this.api_url}/${resource}/${id}/delete`);
+  create(item: T): Observable<T> {
+    return this._http.post<T>(`${this.api_url}/${this.resource}/create`, item);
   }
 
-  getAll(resource: string): Observable<T[]> {
-    return this._http.get<T[]>(`${this.api_url}/${resource}`);
+  delete(id: string): Observable<void> {
+    return this._http.delete<void>(`${this.api_url}/${this.resource}/${id}/delete`);
   }
 
-  getAllPaged(resource: string, page: number, size: number): Observable<T[]> {
-    return this._http.get<T[]>(`${this.api_url}/${resource}?page=${page}&size=${size}`);
+  getAll(): Observable<T[]> {
+    return this._http.get<T[]>(`${this.api_url}/${this.resource}`);
   }
 
-  getById(resource: string, id: string): Observable<T> {
-    return this._http.get<T>(`${this.api_url}/${resource}/${id}`);
+  getAllPaged(page: number, size: number): Observable<T[]> {
+    return this._http.get<T[]>(`${this.api_url}/${this.resource}?page=${page}&size=${size}`);
   }
 
-  update(resource: string, id: string, item: T): Observable<T> {
-    return this._http.patch<T>(`${this.api_url}/${resource}/${id}/update`, item);
+  getById(id: string): Observable<T> {
+    return this._http.get<T>(`${this.api_url}/${this.resource}/${id}`);
+  }
+
+  update(id: string, item: T): Observable<T> {
+    return this._http.patch<T>(`${this.api_url}/${this.resource}/${id}/update`, item);
   }
 }

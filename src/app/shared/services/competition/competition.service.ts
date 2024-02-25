@@ -8,6 +8,6 @@ import {Competition} from "../../../core/models/competition";
 export class CompetitionService extends AbstractService<Competition>{
 
   constructor() {
-    super();
+    super("competitions");
   }
 }

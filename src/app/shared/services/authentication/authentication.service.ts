@@ -5,8 +5,10 @@ import {User} from "../../../core/models/user";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService extends AbstractService<User>{
-  constructor() {
-    super();
-  }
+export class AuthenticationService {
+  constructor() {}
+
+  authenticate() {}
+
+  register() {}
 }
