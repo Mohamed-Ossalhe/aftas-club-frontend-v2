@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Store} from "@ngrx/store";
+import {authPageActions} from "../../../../core/store/auth/actions/auth-page.actions";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,14 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.min(8)])
   })
 
+  constructor(private _store: Store) {
+  }
+
   submit() {
-    console.log(this.loginForm.value)
+    if (this.loginForm.valid) {
+      this._store.dispatch(authPageActions.login({request: this.loginForm.value}))
+    }else {
+      console.log("form invalid")
+    }
   }
 }

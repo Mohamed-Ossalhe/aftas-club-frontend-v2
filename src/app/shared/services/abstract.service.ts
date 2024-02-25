@@ -10,11 +10,7 @@ import {environment} from "../../../environments/environment.development";
 export class AbstractService<T> implements _Service<T>{
   private api_url = environment.API_URL;
   private _http: HttpClient = inject(HttpClient);
-  private readonly resource: string;
-
-  constructor(resource: string) {
-    this.resource = resource;
-  }
+  protected readonly resource!: string;
 
   create(item: T): Observable<T> {
     return this._http.post<T>(`${this.api_url}/${this.resource}/create`, item);

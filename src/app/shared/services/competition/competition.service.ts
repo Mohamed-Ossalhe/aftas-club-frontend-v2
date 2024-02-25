@@ -6,8 +6,5 @@ import {Competition} from "../../../core/models/competition";
   providedIn: 'root'
 })
 export class CompetitionService extends AbstractService<Competition>{
-
-  constructor() {
-    super("competitions");
-  }
+  protected override resource: string = "competitions";
 }
