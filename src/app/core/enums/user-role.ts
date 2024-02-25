@@ -3,7 +3,7 @@
  * It enumerates various roles such as MEMBER, ADMIN, and JURY.
  */
 export enum UserRole {
-  MEMBER = "member",
-  ADMIN = "admin",
-  JURY = "jury"
+  MEMBER = "MEMBER",
+  ADMIN = "ADMIN",
+  JURY = "JURY"
 }

@@ -25,3 +25,20 @@ export const login$ = createEffect((
     })
   )
 }, {functional: true})
+
+export const register$ = createEffect((
+  actions$ = inject(Actions),
+  authenticationService = inject(AuthenticationService)
+) => {
+  return actions$.pipe(
+    ofType(authPageActions.register),
+    concatMap((action) => authenticationService.register(action.request).pipe(
+      map((response) => {
+        return authApiActions.registerSuccess({response: response});
+      }),
+      catchError((errors) => {
+        return of(authApiActions.registerFailure({errors: errors}));
+      })
+    ))
+  )
+}, {functional: true})
