@@ -1,18 +1,11 @@
+import {AuthenticationResponse} from "../models/authentication-response";
+
 export interface authStateInterface {
-  user: AuthResponse | null | undefined,
+  user: AuthenticationResponse | null | undefined,
   isLoggedIn: boolean,
   isSubmitting: boolean,
   isLoading: boolean,
   errors: {}
-}
-
-export interface AuthResponse {
-  username?: string,
-  email?: string,
-  role?: string,
-  token?: string,
-  refreshToken?: string
-  // decodedToken: decodeTokenInterface
 }
 
 interface decodeTokenInterface {

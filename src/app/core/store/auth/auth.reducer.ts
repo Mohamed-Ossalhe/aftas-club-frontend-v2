@@ -6,7 +6,7 @@ import {authApiActions} from "./actions/auth-api.actions";
 const AUTH_FEATURE_KEY: string = "Auth";
 
 const initialState: authStateInterface = {
-  user: null,
+  user: undefined,
   errors: {},
   isLoading: false,
   isSubmitting: false,
@@ -27,13 +27,14 @@ const authFeature = createFeature({
       isSubmitting: false,
       isLoading: false,
       isLoggedIn: true,
-      user: action.response
+      user: { email: action.response.email, token: action.response.token, username: action.response.username, role: action.response.role}
     })),
     on(authApiActions.loginFailure, (state, action) => ({
       ...state,
       isSubmitting: false,
       isLoading: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      user: undefined
     }))
   )
 })
