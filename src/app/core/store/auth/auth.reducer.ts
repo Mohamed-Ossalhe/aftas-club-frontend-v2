@@ -6,11 +6,11 @@ import {authApiActions} from "./actions/auth-api.actions";
 const AUTH_FEATURE_KEY: string = "Auth";
 
 const initialState: authStateInterface = {
-  authentication: null,
-  i18n: null,
-  _persist: null,
-  submitting: false,
-  loading: false
+  user: null,
+  errors: {},
+  isLoading: false,
+  isSubmitting: false,
+  isLoggedIn: false
 }
 
 const authFeature = createFeature({
@@ -19,18 +19,21 @@ const authFeature = createFeature({
     initialState,
     on(authPageActions.login, state => ({
       ...state,
-      submitting: true,
-      loading: true
+      isSubmitting: true,
+      isLoading: true
     })),
     on(authApiActions.loginSuccess, (state, action) => ({
       ...state,
-      submitting: false,
-      loading: false
+      isSubmitting: false,
+      isLoading: false,
+      isLoggedIn: true,
+      user: action.response
     })),
     on(authApiActions.loginFailure, (state, action) => ({
       ...state,
-      submitting: false,
-      loading: false
+      isSubmitting: false,
+      isLoading: false,
+      isLoggedIn: false
     }))
   )
 })
@@ -39,9 +42,9 @@ const authFeature = createFeature({
 export const {
   name: authFeatureKey,
   reducer: authFeatureReducer,
-  selectAuthentication,
-  selectI18n,
-  select_persist,
-  selectSubmitting,
-  selectLoading
+  selectUser,
+  selectIsLoading,
+  selectIsLoggedIn,
+  selectIsSubmitting,
+  selectErrors
 } = authFeature;

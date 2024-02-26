@@ -1,31 +1,23 @@
 export interface authStateInterface {
-  authentication: authenticationInterface | null,
-  i18n: i18nInterface | null,
-  _persist: persistInterface | null,
-  submitting: boolean,
-  loading: boolean
+  user: AuthResponse | null | undefined,
+  isLoggedIn: boolean,
+  isSubmitting: boolean,
+  isLoading: boolean,
+  errors: {}
 }
 
-interface authenticationInterface {
-  token: string | null,
-  decodedToken: decodeTokenInterface | null,
-  refreshToken: string | null
+export interface AuthResponse {
+  username?: string,
+  email?: string,
+  role?: string,
+  token?: string,
+  refreshToken?: string
+  // decodedToken: decodeTokenInterface
 }
 
 interface decodeTokenInterface {
+  "sub": string,
   "iat": number,
   "exp": number,
-  "sub": string,
-  "roles": string[],
-  "username": string,
-  "locale": string
-}
-
-interface i18nInterface {
-  locale: string
-}
-
-interface persistInterface {
-  "version": number,
-  "rehydrated": boolean
+  "roles": []
 }

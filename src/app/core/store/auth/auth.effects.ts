@@ -4,17 +4,24 @@ import {AuthenticationService} from "../../../shared/services/authentication/aut
 import {authPageActions} from "./actions/auth-page.actions";
 import {catchError, concatMap, map, of} from "rxjs";
 import {authApiActions} from "./actions/auth-api.actions";
+import {LocalStorageService} from "../../../shared/services/local-storage-service/local-storage.service";
+import {JwtService} from "../../../shared/services/jwt-service/jwt.service";
+import {jwtDecode} from "jwt-decode";
 
 export const login$ = createEffect((
   actions$ = inject(Actions),
-  authenticationService = inject(AuthenticationService)
+  authenticationService = inject(AuthenticationService),
+  localStorageService = inject(LocalStorageService)
 ) => {
   return actions$.pipe(
     ofType(authPageActions.login),
     concatMap((action) => {
       return authenticationService.authenticate(action.request).pipe(
         map((response) => {
-          return authApiActions.loginSuccess({response: response});
+          localStorageService.setPersistState(response);
+          return authApiActions.loginSuccess({
+            response: response
+          });
         }),
         catchError((errors) => {
           return of(
@@ -28,12 +35,14 @@ export const login$ = createEffect((
 
 export const register$ = createEffect((
   actions$ = inject(Actions),
-  authenticationService = inject(AuthenticationService)
+  authenticationService = inject(AuthenticationService),
+  localStorageService = inject(LocalStorageService)
 ) => {
   return actions$.pipe(
     ofType(authPageActions.register),
     concatMap((action) => authenticationService.register(action.request).pipe(
       map((response) => {
+        localStorageService.setPersistState(response);
         return authApiActions.registerSuccess({response: response});
       }),
       catchError((errors) => {
