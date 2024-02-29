@@ -7,7 +7,7 @@ export interface AuthenticationResponse {
   username?: string,
   email?: string,
   role?: string,
-  token: string,
-  refreshToken?: string
+  access_token: string,
+  refresh_token: string
   // decodedToken: decodeTokenInterface
 }

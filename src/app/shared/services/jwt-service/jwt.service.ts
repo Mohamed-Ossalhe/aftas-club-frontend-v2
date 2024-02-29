@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {jwtDecode} from "jwt-decode";
-import {LocalStorageService} from "../local-storage-service/local-storage.service";
 import {Store} from "@ngrx/store";
 import {selectUser} from "../../../core/store/auth/auth.reducer";
 
@@ -13,12 +12,12 @@ export class JwtService {
 
   getToken() {
     const authenticationState = this.store.selectSignal(selectUser);
-    return authenticationState() ?? authenticationState()?.token;
+    return authenticationState() ? authenticationState()?.access_token : null;
   }
 
   getRefreshToken() {
     const authenticationState = this.store.selectSignal(selectUser);
-    return authenticationState() ?? authenticationState()?.refreshToken;
+    return authenticationState() ? authenticationState()?.refresh_token : null;
   }
 
   getUsername() {
@@ -28,7 +27,7 @@ export class JwtService {
 
   getRole(){
     const authenticationState = this.store.selectSignal(selectUser);
-    return authenticationState() ?? authenticationState()?.role;
+    return authenticationState() ? authenticationState()?.role : null;
   }
 
   decodeJwt(token: any) {

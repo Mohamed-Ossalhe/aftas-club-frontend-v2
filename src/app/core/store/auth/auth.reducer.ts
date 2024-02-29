@@ -27,7 +27,7 @@ const authFeature = createFeature({
       isSubmitting: false,
       isLoading: false,
       isLoggedIn: true,
-      user: { email: action.response.email, token: action.response.token, username: action.response.username, role: action.response.role}
+      user: { email: action.response.email, access_token: action.response.access_token, refresh_token: action.response.refresh_token, username: action.response.username, role: action.response.role}
     })),
     on(authApiActions.loginFailure, (state, action) => ({
       ...state,
@@ -35,7 +35,22 @@ const authFeature = createFeature({
       isLoading: false,
       isLoggedIn: false,
       user: undefined
-    }))
+    })),
+    on(authApiActions.registerSuccess, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      isLoading: false,
+      isLoggedIn: true,
+      user: { email: action.response.email, access_token: action.response.access_token, refresh_token: action.response.refresh_token, username: action.response.username, role: action.response.role}
+    })),
+    on(authApiActions.registerFailure, (state, action) => ({
+      ...state,
+      isSubmitting: false,
+      isLoading: false,
+      isLoggedIn: false,
+      user: undefined
+    })),
+    on(authPageActions.logout, state => initialState)
   )
 })
 

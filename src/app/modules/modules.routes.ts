@@ -1,5 +1,6 @@
 import {Routes} from "@angular/router";
 import {HomeComponent} from "./home/pages/home/home.component";
+import {juryGuard} from "../core/guards/jury.guard";
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
   {
     path: "competitions",
     loadComponent: () => import("./competition/pages/base/base.component").then(c => c.BaseComponent),
+    canActivate: [juryGuard],
     children: [
       {
         path: "",
